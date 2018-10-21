@@ -71,7 +71,7 @@ if not SUDO_USER:match('@[%a%d_]') then
 print('\n\27[1;31m￤ This is Not USERNAME !\n￤هہ‏‏ذآ ليس مـعرف حسـآب تلگرآم , عذرآ آدخل آلمـعرف آلصـحيح آلآن . ')
 create_config(Token)
 end 
-local url , res = https.request('https://aldery.ga/GetID/?User='..SUDO_USER)
+local url , res = https.request('https://th3boss.ga/GetID/?User='..SUDO_USER)
 if res ~= 200 then
 print('\n\27[1;31m￤ Conect is Failed !\n￤ حدث خطـآ في آلآتصـآل بآلسـيرفر , يرجى مـرآسـلهہ‏‏ مـطـور آلسـورس ليتمـگن مـن حل آلمـشـگلهہ‏‏ في آسـرع وقت مـمـگن . !')
 create_config(Token)
@@ -107,7 +107,7 @@ Cr_file = io.open("./inc/Token.txt", "w")
 Cr_file:write(Token)
 Cr_file:close() 
 print('\27[1;36m￤Token.txt is created.\27[m')
-local Text = "🙋🏼‍♂️¦ اهلا عزيزي [المطور الاساسي](tg://user?id="..GetUser.information.id..") \n🔖¦ شكرا لاستخدامك سورس الاسد الديري \n📡¦ أرســل  الان /start\n📛¦ لاضهار الاوامر للمطور  المجهزه بالكيبورد\n\n⚡️"
+local Text = "🙋🏼‍♂️¦ اهلا عزيزي [المطور الاساسي](tg://user?id="..GetUser.information.id..") \n🔖¦ شكرا لاستخدامك سورس الزعيم \n📡¦ أرســل  الان /start\n📛¦ لاضهار الاوامر للمطور  المجهزه بالكيبورد\n\n⚡️"
 https.request(Api_Token..'/sendMessage?chat_id='..GetUser.information.id..'&text='..URL.escape(Text)..'&parse_mode=Markdown')
 os.execute([[
 rm -f ./README.md
@@ -126,6 +126,17 @@ if not TokenBot then
 print('\27[0;33m>>'..[[
 
 
+
+
+
+▀█████████▄   ▄██████▄     ▄████████    ▄████████
+  ███    ███ ███    ███   ███    ███   ███    ███
+  ███    ███ ███    ███   ███    █▀    ███    █▀
+ ▄███▄▄▄██▀  ███    ███   ███          ███
+▀▀███▀▀▀██▄  ███    ███ ▀███████████ ▀███████████ ¦ Dev : @TH3BS
+  ███    ██▄ ███    ███          ███          ███ ¦ Dev : @BLCON
+  ███    ███ ███    ███    ▄█    ███    ▄█    ███
+▄█████████▀   ▀██████▀   ▄████████▀   ▄████████▀  ¦ Source The3Boss
 ---------------------------------------------------------------------
 ]]..'\027[0;32m')
 create_config() 
@@ -158,6 +169,15 @@ print('\27[0;33m>>'..[[
 
 
 
+
+
+
+▀█████████▄   ▄██████▄     ▄████████    ▄████████ 
+  ███    ███ ███    ███   ███    ███   ███    ███ 
+  ███    ███ ███    ███   ███    █▀    ███    █▀  
+ ▄███▄▄▄██▀  ███    ███   ███          ███        
+▀▀███▀▀▀██▄  ███    ███ ▀███████████ ▀███████████ ¦ Dev : @TH3BS
+  ███    ██▄ ███    ███          ███          ███ ¦ Dev : @BLCON
   ███    ███ ███    ███    ▄█    ███    ▄█    ███ 
 ▄█████████▀   ▀██████▀   ▄████████▀   ▄████████▀  ¦ VERSION » v]]..version..[[
 
@@ -208,12 +228,16 @@ StatusLeft(msg.chat_id_,our_id)
 return false
 end
 
-if msg.date and msg.date < os.time() - 30 and not msg.edited then --[[ فحص تاريخ الرساله ]]
+if msg.date_ and msg.date_ < os.time() - 10 and not msg.edited then --[[ فحص تاريخ الرساله ]]
 print('\27[36m¦¦¦¦  !! [THIS__OLD__MSG]  !! ¦¦¦¦\27[39m')
 return false  
-end  
-if not (msg.adduser or msg.joinuser or msg.deluser) and msg.sender_user_id_ == our_id then
- return false
+end
+
+if not (msg.adduser or msg.joinuser or msg.deluser) 
+and msg.sender_user_id_ == our_id 
+and msg.content_.ID ~= "MessageChatChangePhoto" 
+and msg.content_.ID ~= "MessageChatChangeTitle" then
+return false
 end
 	
 if msg.reply_to_message_id_ ~= 0 then msg.reply_id = msg.reply_to_message_id_ end
@@ -232,118 +256,68 @@ end
 
 
 if redis:get(boss..'group:add'..msg.chat_id_) then 
-GroupActive = true
+msg.GroupActive = true
 else
-GroupActive = false
+msg.GroupActive = false
 end
-
-Rank = false
 
 if msg.sender_user_id_ == SUDO_ID then 
-Rank = 1
-elseif GroupActive and redis:sismember(boss..':SUDO_BOT:',msg.sender_user_id_) then 
-Rank = 2
-elseif GroupActive and redis:sismember(boss..':MONSHA_BOT:'..msg.chat_id_,msg.sender_user_id_) then 
-Rank = 3
-elseif GroupActive and redis:sismember(boss..'owners:'..msg.chat_id_,msg.sender_user_id_) then 
-Rank = 4
-elseif GroupActive and redis:sismember(boss..'admins:'..msg.chat_id_,msg.sender_user_id_) then 
-Rank = 5
-elseif GroupActive and redis:sismember(boss..'whitelist:'..msg.chat_id_,msg.sender_user_id_) then 
-Rank = 6
+msg.TheRankCmd = 'المطور 👨🏻‍✈️' 
+msg.TheRank = 'مطور اساسي 👨🏻‍✈️' 
+msg.Rank = 1
+elseif msg.GroupActive and redis:sismember(boss..':SUDO_BOT:',msg.sender_user_id_) then 
+msg.TheRankCmd = 'المطور 👨🏽‍💻'
+msg.TheRank = 'مطور البوت 👨🏽‍💻'
+msg.Rank = 2
+elseif msg.GroupActive and redis:sismember(boss..':MONSHA_BOT:'..msg.chat_id_,msg.sender_user_id_) then 
+msg.TheRankCmd = 'المنشىء 👷🏽'
+msg.TheRank = 'المنشىء 👷🏽'
+msg.Rank = 3
+elseif msg.GroupActive and redis:sismember(boss..'owners:'..msg.chat_id_,msg.sender_user_id_) then 
+msg.TheRankCmd = 'المدير 👨🏼‍⚕️' 
+msg.TheRank = 'مدير البوت 👨🏼‍⚕️' 
+msg.Rank = 4
+elseif msg.GroupActive and redis:sismember(boss..'admins:'..msg.chat_id_,msg.sender_user_id_) then 
+msg.TheRankCmd = 'الادمن 👨🏼‍🎓'
+msg.TheRank = 'ادمن في البوت 👨🏼‍🎓'
+msg.Rank = 5
+elseif msg.GroupActive and redis:sismember(boss..'whitelist:'..msg.chat_id_,msg.sender_user_id_) then 
+msg.TheRank = 'عضو مميز ⭐️'
+msg.Rank = 6
 elseif msg.sender_user_id_ == our_id then
-Rank = 7
+msg.Rank = 7
 else
-Rank = false
+msg.TheRank = 'فقط عضو 🙍🏼‍♂️'
+msg.Rank = 10 
 end
 
-
---=========={{ Rank For User }} ==============
-if Rank == 1 then 
-TheRank = 'مطور اساسي 👨🏻‍✈️' 
-elseif Rank == 2 then 
-TheRank = 'مطور البوت 👨🏽‍💻'
-elseif Rank == 3 then 
-TheRank = 'المنشىء 👷🏽'
-elseif Rank == 4 then 
-TheRank = 'مدير البوت 👨🏼‍⚕️' 
-elseif Rank == 5 then 
-TheRank = 'ادمن في البوت 👨🏼‍🎓'
-elseif Rank == 6 then 
-TheRank = 'عضو مميز ⭐️'
-else
-TheRank = 'فقط عضو 🙍🏼‍♂️'
+if msg.Rank == 1 then
+msg.SudoBase = true
 end
 
-if Rank == 1 then 
-TheRankCmd = 'المطور 👨🏻‍✈️' 
-elseif Rank == 2 then 
-TheRankCmd = 'المطور 👨🏽‍💻'
-elseif Rank == 3 then 
-TheRankCmd = 'المنشىء 👷🏽'
-elseif Rank == 4 then 
-TheRankCmd = 'المدير 👨🏼‍⚕️' 
-elseif Rank == 5 then 
-TheRankCmd = 'الادمن 👨🏼‍🎓'
+if msg.Rank == 1 or msg.Rank == 2 then
+msg.SudoBase = true
 end
 
-
-function SudoBase()
-if Rank == 1 then
-return true
-else
-return false
-end
+if msg.Rank == 1 or msg.Rank == 2 or msg.Rank == 3 then
+msg.Creator = true
 end
 
-function SudoUser()
-if Rank == 1 or Rank == 2 then
-return true
-else
-return false
-end
+if msg.Rank == 1 or msg.Rank == 2 or msg.Rank == 3 or msg.Rank == 4 then
+msg.Director = true
 end
 
-function Creator()
-if Rank == 1 or Rank == 2 or Rank == 3 then
-return true
-else
-return false
-end
+if msg.Rank == 1 or msg.Rank == 2 or msg.Rank == 3 or msg.Rank == 4 or msg.Rank == 5 then
+msg.Admin = true
 end
 
-function Director()
-if Rank == 1 or Rank == 2 or Rank == 3 or Rank == 4 then
-return true
-else
-return false
-end
+if msg.Rank == 6 then
+msg.Special = true
 end
 
-function Admin()
-if Rank == 1 or Rank == 2 or Rank == 3 or Rank == 4 or Rank == 5 then
-return true
-else
-return false
+if msg.Rank == 7 then
+msg.OurBot = true
 end
-end
-
-function Special()
-if Rank == 6 then
-return true
-else
-return false
-end
-end
-
-function OurBot()
-if Rank == 7 then
-return true
-else
-return false
-end
-end
-
 
 
 -- [[ المحظورين عام ]]
@@ -356,7 +330,7 @@ end
 
 --[[ المكتومين ]]
 if MuteUser(msg.chat_id_,msg.sender_user_id_) then 
-if Admin() then redis:srem(boss..'is_silent_users:'..msg.chat_id_,msg.sender_user_id_) return end
+if msg.Admin then redis:srem(boss..'is_silent_users:'..msg.chat_id_,msg.sender_user_id_) return end
 print("\27[1;31m User is Silent\27[0m")
 Del_msg(msg.chat_id_,msg.id_)
 return false 
@@ -364,14 +338,14 @@ end
 
 --[[ المحظورين ]]
 if Check_Banned((msg.adduser or msg.sender_user_id_),msg.sender_user_id_) then
-if Admin() then redis:srem(boss..'banned:'..msg.chat_id_,msg.sender_user_id_) return end
+if msg.Admin then redis:srem(boss..'banned:'..msg.chat_id_,msg.sender_user_id_) return end
 print('\27[1;31m is_BANED_USER\27[0m')
 Del_msg(msg.chat_id_, msg.id_)
 kick_user((msg.adduser or msg.sender_user_id_), msg.chat_id_)
 return false 
 end
 
-if not Admin() then
+if not msg.Admin then
 if redis:get(boss..'mute_text'..msg.chat_id_) then --قفل الدردشه
 print("\27[1;31m Chat is Mute \27[0m")
 Del_msg(msg.chat_id_,msg.id_)
@@ -440,15 +414,16 @@ print("The File Script.lua Not Runing in The Source Boss")
 end
 
 
-
+ 
 end
 
 
 function tdcli_update_callback(data)
 	local msg = data.message_
+
 	if data.ID == "UpdateMessageSendFailed" then 
-      if data.message_ and data.message_.sender_user_id_ then
-	redis:srem(boss..'users',data.message_.sender_user_id_)
+    if msg.sender_user_id_ then
+	redis:srem(boss..'users',msg.sender_user_id_)
 	end
 	elseif data.ID == "UpdateMessageSendSucceeded" then
 	if Refresh_Start then
@@ -459,31 +434,33 @@ function tdcli_update_callback(data)
 	if UpdateSourceStart then
 	UpdateSourceStart = false
 	EditMsg(data.message_.chat_id_,data.message_.id_,'10% - |█          |')
-	sleep(0.2)
+	print("10%")
 	EditMsg(data.message_.chat_id_,data.message_.id_,'20% - |███         |')
-	sleep(0.2)
-	EditMsg(data.message_.chat_id_,data.message_.id_,'30% - |████        |')
-	sleep(0.2)
-	EditMsg(data.message_.chat_id_,data.message_.id_,'40% - |█████       |')
-	sleep(0.2)
-	EditMsg(data.message_.chat_id_,data.message_.id_,'50% - |██████      |')
 	download_file('https://raw.githubusercontent.com/TH3BS/BOSS/master/inc/Run.lua','./inc/Run.lua')
-	download_file('https://raw.githubusercontent.com/TH3BS/BOSS/master/inc/Script.lua','./inc/Script.lua')
-	download_file('https://raw.githubusercontent.com/TH3BS/BOSS/master/inc/functions.lua','./inc/functions.lua')
+	print("20%")
+	EditMsg(data.message_.chat_id_,data.message_.id_,'30% - |████        |')
+	print("30%")
+	EditMsg(data.message_.chat_id_,data.message_.id_,'40% - |█████       |')
 	download_file('https://raw.githubusercontent.com/TH3BS/BOSS/master/inc/locks.lua','./inc/locks.lua')
+	print("40%")
+	EditMsg(data.message_.chat_id_,data.message_.id_,'50% - |██████      |')
+	print("50%")
 	EditMsg(data.message_.chat_id_,data.message_.id_,'60% - |███████     |')
-	sleep(0.2)
+	download_file('https://raw.githubusercontent.com/TH3BS/BOSS/master/inc/Script.lua','./inc/Script.lua')
+	print("60%")
 	EditMsg(data.message_.chat_id_,data.message_.id_,'70% - |████████    |')
-	sleep(0.2)
+	print("70%")
 	EditMsg(data.message_.chat_id_,data.message_.id_,'80% - |█████████   |')
-	sleep(0.2)
+	download_file('https://raw.githubusercontent.com/TH3BS/BOSS/master/inc/functions.lua','./inc/functions.lua')
+	print("80%")
 	EditMsg(data.message_.chat_id_,data.message_.id_,'90% - |██████████  |')
-	sleep(0.2)
+	print("90%")
 	EditMsg(data.message_.chat_id_,data.message_.id_,'100% - |█████████████|\n\n🔝*¦* تم تحديث السورس الى اصدار *v'..redis:get(boss..":VERSION")..'*\n📟*¦* تم اعاده تشغيل السورس بنجاح')
 	dofile("./inc/Run.lua")
 	print("Update Source And Reload ~ ./inc/Run.lua")
 	end
 	elseif data.ID == "UpdateNewMessage" then
+
 	if msg.content_.ID == "MessageText" and not msg.forward_info_ then
 	if msg.content_.entities_ and msg.content_.entities_[0] and msg.content_.entities_[0].ID then
 	if msg.content_.entities_[0].ID == "MessageEntityTextUrl" then
@@ -506,10 +483,10 @@ function tdcli_update_callback(data)
 	end)
 	end 
 	if msg.text== 'Update Source' and msg.sender_user_id_ == SUDO_ID then
-	download_file('https://github.com/aboubker/the-Dery/blob/master/inc/Run.lua','./inc/Run.lua')
-	download_file('https://github.com/aboubker/the-Dery/blob/master/inc/Script.lua','./inc/Script.lua')
-	download_file('https://github.com/aboubker/the-Dery/blob/master/inc/functions.lua','./inc/functions.lua')
-	download_file('https://github.com/aboubker/the-Dery/blob/master/inc/locks.lua','./inc/locks.lua')
+	download_file('https://raw.githubusercontent.com/TH3BS/BOSS/master/inc/Run.lua','./inc/Run.lua')
+	download_file('https://raw.githubusercontent.com/TH3BS/BOSS/master/inc/Script.lua','./inc/Script.lua')
+	download_file('https://raw.githubusercontent.com/TH3BS/BOSS/master/inc/functions.lua','./inc/functions.lua')
+	download_file('https://raw.githubusercontent.com/TH3BS/BOSS/master/inc/locks.lua','./inc/locks.lua')
 	sendMsg(msg.chat_id_,msg.id_,'👷🏽| {* تــم تحديث وتثبيت السورس  *} 📡.\n\n👨🏼‍💼| { Bot is Update » }👍🏿',nil,function(arg,data)
 	dofile("./inc/Run.lua")
 	print("Reload ~ ./inc/Run.lua")
@@ -548,12 +525,10 @@ function tdcli_update_callback(data)
 	print('¦'..msg.content_.ID)
 	msg.voice = true
 	voice_id = msg.content_.voice_.voice_.persistent_id_
-	elseif msg.content_.ID == "MmessageAudio" then
+	elseif msg.content_.ID == "MessageAudio" then
 	print('¦'..msg.content_.ID)
 	msg.audio = true
 	audio_id = msg.content_.audio_.audio_.persistent_id_
-	elseif msg.content_.ID == "MessageVideoNote" then
-        msg.video_note = true
 	elseif msg.content_.ID == "MessageSticker" then
 	print('¦'..msg.content_.ID)
 	msg.sticker = true
@@ -573,6 +548,7 @@ function tdcli_update_callback(data)
 	print('¦'..msg.content_.ID)
 	msg.game = true
 	elseif msg.content_.ID == "MessageChatDeleteMember" then
+
 	 msg.deluser = true
 	elseif msg.content_.ID == "MessageChatAddMembers" then
 	for i=0,#msg.content_.members_ do
@@ -597,7 +573,7 @@ function tdcli_update_callback(data)
 	if redis:get(boss..'group:add'..msg.chat_id_) then
 	redis:set(boss..'group:name'..msg.chat_id_,msg.content_.title_)
 	end
-	end
+	end 
 	
 	elseif data.ID == "UpdateNewChat" then  
 	if redis:get(boss..'group:add'..data.chat_.id_) then
@@ -605,7 +581,6 @@ function tdcli_update_callback(data)
 	end
 	elseif data.ID == "UpdateChannel" then  
 	if data.channel_.status_.ID == "chatMemberStatusKicked" then 
-
 	elseif data.channel_.status_.ID == "ChatMemberStatusMember" then 
 	print('¦ The bot is Member')
 	elseif data.channel_.status_.ID == "ChatMemberStatusEditor" then 
@@ -616,10 +591,8 @@ function tdcli_update_callback(data)
 	local NameGroup = (redis:get(boss..'group:name-100'..data.channel_.id_) or "")
 	send_msg(SUDO_ID,"📛| قام شخص بطرد البوت من المجموعه الاتيه : \n🏷| ألايدي : `-100"..data.channel_.id_.."`\n🗯| الـمجموعه : "..Flter_Markdown(NameGroup).."\n\n📮| تـم مسح كل بيانات المجموعه بنـجاح ")
 	rem_data_group('-100'..data.channel_.id_)
-	return false
 	end
 	end
-	print(data.channel_.status_.ID) 
 	elseif data.ID == "UpdateFile" then 
 	if Uploaded_Groups_Ok then
 	Uploaded_Groups_Ok = false
@@ -664,11 +637,10 @@ function tdcli_update_callback(data)
 	end
 	end
 	end
-	io.popen("rm -f ../.telegram-cli/data/document/*")
+	io.popen("rm -fr ../.telegram-cli/data/document/*")
 	sendMsg(Uploaded_Groups_CH,Uploaded_Groups_MS,'📦*¦* تم رفع آلنسـخهہ‏‏ آلآحتيآطـيهہ\n⚖️*¦* حآليآ عدد مـجمـوعآتگ هہ‏‏يهہ‏‏ *'..redis:scard(boss..'group:ids')..'* 🌿\n✓')
 	end
 	elseif data.ID == "UpdateUser" then  
-
 	if data.user_.type_.ID == "UserTypeDeleted" then
 	print("¦ userTypeDeleted")
 	redis:srem(boss..'users',data.user_.id_)
@@ -691,7 +663,48 @@ function tdcli_update_callback(data)
 	data.text = (data.content_.text_ or false)
 	input_inFo(msg)  
 	end,nil)
+	elseif data.ID == "UpdateOption" and data.value_.value_ == "Ready" then
+	print(" ||  ------------------------[ Loading For loding list Chat ]--------------------- ||")
+	local groups = redis:smembers(boss..'group:ids')
+	local GroupsIsFound = 0
+	for i = 1, #groups do 
+	GroupTitle(groups[i],function(arg,data)
+	if data.code_ and data.code_ == 400 then
+	rem_data_group(groups[i])
+	print(" Del Group From list ")
+	else
+	if data.type_ and data.type_.channel_ 
+	and data.type_.channel_.status_.ID == "ChatMemberStatusMember" then
+	StatusLeft(groups[i],our_id)
+	rem_data_group(groups[i])
+	print(" Del Group From list ")
 	end
- 
+	print(" Name Group : "..data.title_)
+	GroupsIsFound = GroupsIsFound + 1
+	end
+	print(GroupsIsFound..' : '..#groups..' : '..i)
+	if #groups == i then
+	
+	local pv = redis:smembers(boss..'users')
+	local NumPvDel = 0
+	for i = 1, #pv do
+	GroupTitle(pv[i],function(arg,data)
+	NumPvDel = NumPvDel + 1
+	print("Geting Ok : "..NumPvDel)
+	end)
+	end
+	
+	end
+	end)
+	end
+	
+	
+	
+
+
+
+
+	end
+	
 	
 end
