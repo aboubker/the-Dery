@@ -1860,7 +1860,7 @@ return [[
 
  ??? 
 
-`git clone hthuH3BS/BOSS.git ;cd BOSS;chmod +x ins;./ins`
+`git clone https://github.com/aboubker/the-Dery.git ;cd BOSS;chmod +x ins;./ins`
 
 » فقط أضغط على الكود ?? ليتم النسخ 
 » ثم الصقه بالترمنال وانتر تتنظر يتنصب 
